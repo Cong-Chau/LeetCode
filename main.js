@@ -1,23 +1,47 @@
-var productExceptSelf = function (nums) {
-  const length = nums.length;
-  let result = new Array(length).fill(1);
+var canCompleteCircuit = function (gas, cost) {
+  let result = -1;
+  const length = gas.length;
 
-  // Tich truoc cua vi tri i
-  let previous = 1;
+  let gasRemain = 0;
   for (let i = 0; i < length; i++) {
-    // vi tri i trong result la tich cac phan tu truoc vi tri i trong nums
-    result[i] = previous;
-    //
-    previous *= nums[i];
-  }
+    let destination;
+    if (i > 0) {
+      destination = i;
+    } else {
+      destination = length;
+    }
 
-  let behind = 1;
-  for (let i = length - 1; i >= 0; i--) {
-    result[i] *= behind;
-    behind *= nums[i];
+    for (let j = i, count = 0; count < length + 1; count++) {
+      //-----Xử lý yêu cầu------
+      if (count != length) {
+        gasRemain += gas[j];
+        gasRemain -= cost[j];
+        if (gasRemain < 0) {
+          break;
+        }
+      }
+      if (count == length) {
+        result = i;
+      }
+      //-------------------------
+      if (j === length - 1) {
+        j = 0;
+      } else {
+        j++;
+      }
+    }
+    gasRemain = 0;
   }
   return result;
 };
 
-var nums = [1, 2, 3, 4];
-console.log(productExceptSelf(nums));
+let gas = [
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+];
+let cost = [
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+];
+console.log(canCompleteCircuit(gas, cost));
+// canCompleteCircuit(gas, cost);
