@@ -1,47 +1,22 @@
-var canCompleteCircuit = function (gas, cost) {
-  let result = -1;
-  const length = gas.length;
+var lengthOfLongestSubstring = function (s) {
+  let current = "";
+  let maxLength = 0;
+  let start = 0;
 
-  let gasRemain = 0;
-  for (let i = 0; i < length; i++) {
-    let destination;
-    if (i > 0) {
-      destination = i;
-    } else {
-      destination = length;
+  for (let end = 0; end < s.length; end++) {
+    // s[end]
+    while (current.includes(s[end])) {
+      current = current.slice(1);
+      start++;
     }
 
-    for (let j = i, count = 0; count < length + 1; count++) {
-      //-----Xử lý yêu cầu------
-      if (count != length) {
-        gasRemain += gas[j];
-        gasRemain -= cost[j];
-        if (gasRemain < 0) {
-          break;
-        }
-      }
-      if (count == length) {
-        result = i;
-      }
-      //-------------------------
-      if (j === length - 1) {
-        j = 0;
-      } else {
-        j++;
-      }
+    current += s[end];
+
+    if (current.length > maxLength) {
+      maxLength = current.length;
     }
-    gasRemain = 0;
   }
-  return result;
+  return maxLength;
 };
 
-let gas = [
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-];
-let cost = [
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-];
-console.log(canCompleteCircuit(gas, cost));
-// canCompleteCircuit(gas, cost);
+console.log(lengthOfLongestSubstring("dvdf"));
