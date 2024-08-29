@@ -1,22 +1,28 @@
-var lengthOfLongestSubstring = function (s) {
+var longestPalindrome = function (s) {
+  if (s === "") {
+    return "";
+  }
   let current = "";
   let maxLength = 0;
-  let start = 0;
-
-  for (let end = 0; end < s.length; end++) {
-    // s[end]
-    while (current.includes(s[end])) {
-      current = current.slice(1);
-      start++;
-    }
-
-    current += s[end];
-
-    if (current.length > maxLength) {
-      maxLength = current.length;
+  let maxReverse = "";
+  for (let i = 0; i < s.length; i++) {
+    for (let j = i; j < s.length + 1; j++) {
+      current = s.slice(i, j);
+      let tempRV = current.split("").reverse().join("");
+      if (current === tempRV) {
+        if (tempRV.length >= maxLength) {
+          maxReverse = current;
+          maxLength = maxReverse.length;
+        }
+      }
     }
   }
-  return maxLength;
+  return maxReverse;
 };
 
-console.log(lengthOfLongestSubstring("dvdf"));
+console.log(
+  longestPalindrome(
+    "ibvjkmpyzsifuxcabqqpahjdeuzaybqsrsmbfplxycsafogotliyvhxjtkrbzqxlyfwujzhkdafhebvsdhkkdbhlhmaoxmbkqiwiusngkbdhlvxdyvnjrzvxmukvdfobzlmvnbnilnsyrgoygfdzjlymhprcpxsnxpcafctikxxybcusgjwmfklkffehbvlhvxfiddznwumxosomfbgxoruoqrhezgsgidgcfzbtdftjxeahriirqgxbhicoxavquhbkaomrroghdnfkknyigsluqebaqrtcwgmlnvmxoagisdmsokeznjsnwpxygjjptvyjjkbmkxvlivinmpnpxgmmorkasebngirckqcawgevljplkkgextudqaodwqmfljljhrujoerycoojwwgtklypicgkyaboqjfivbeqdlonxeidgxsyzugkntoevwfuxovazcyayvwbcqswzhytlmtmrtwpikgacnpkbwgfmpavzyjoxughwhvlsxsgttbcyrlkaarngeoaldsdtjncivhcfsaohmdhgbwkuemcembmlwbwquxfaiukoqvzmgoeppieztdacvwngbkcxknbytvztodbfnjhbtwpjlzuajnlzfmmujhcggpdcwdquutdiubgcvnxvgspmfumeqrofewynizvynavjzkbpkuxxvkjujectdyfwygnfsukvzflcuxxzvxzravzznpxttduajhbsyiywpqunnarabcroljwcbdydagachbobkcvudkoddldaucwruobfylfhyvjuynjrosxczgjwudpxaqwnboxgxybnngxxhibesiaxkicinikzzmonftqkcudlzfzutplbycejmkpxcygsafzkgudy"
+  )
+);
+// longestPalindrome("babad");
