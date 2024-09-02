@@ -1,24 +1,20 @@
-var convert = function (s, numRows) {
-  if (s.length <= numRows) return s;
-
-  let result = new Array(Math.min(numRows, s.length)).fill("");
-  let row = 0;
-  let node = true;
-  for (let i = 0; i < s.length; i++) {
-    result[row] += s[i];
-
-    if (numRows !== 1) {
-      if (node) {
-        row++;
-      } else {
-        row--;
-      }
-    }
-    if (row === 0 || row === numRows - 1) {
-      node = !node;
+var maxArea = function (height) {
+  let result = 0;
+  let left = 0;
+  let right = height.length - 1;
+  while (left < right) {
+    let h = height[left] < height[right] ? height[left] : height[right];
+    let w = right - left;
+    let currentArea = h * w;
+    result = currentArea > result ? currentArea : result;
+    if (height[left] < height[right]) {
+      left++;
+    } else {
+      right--;
     }
   }
-  return result.join("");
+  return result;
 };
 
-console.log(convert("AB", 1));
+console.log(maxArea([1, 8, 6, 2, 5, 4, 8, 3, 7]));
+// maxArea([1, 8, 6, 2, 5, 4, 8, 3, 7]);
